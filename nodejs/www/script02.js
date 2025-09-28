@@ -237,11 +237,6 @@ map.on("load", () => {
     document.querySelector(".maplibregl-ctrl-top-left").appendChild(orbitButton);
 
     let isOrbiting = true; // เริ่มหมุนอัตโนมัติ
-    orbitButton.onclick = () => {
-        isOrbiting = !isOrbiting;
-        orbitButton.textContent = isOrbiting ? "หยุดหมุน" : "หมุนกล้อง";
-    };
-
     const center = [98.9853, 18.7883]; // ศูนย์กลางแผนที่
     let bearing = map.getBearing();
     const zoom = 12;
@@ -249,7 +244,7 @@ map.on("load", () => {
 
     function animate() {
         if (!isOrbiting) return;
-        bearing += 0.3; // ชะลอความเร็วการหมุน (จาก 1 เป็น 0.3 องศาต่อเฟรม)
+        bearing += 0.3; // ชะลอความเร็วการหมุน
         map.setBearing(bearing);
         map.setCenter(center);
         map.setZoom(zoom);
@@ -257,7 +252,17 @@ map.on("load", () => {
         requestAnimationFrame(animate);
     }
 
-    animate(); // เริ่ม animation ทันที
+    // เริ่ม animation ทันที
+    animate();
+
+    // จัดการปุ่มหมุนกล้อง
+    orbitButton.onclick = () => {
+        isOrbiting = !isOrbiting;
+        orbitButton.textContent = isOrbiting ? "หยุดหมุน" : "หมุนกล้อง";
+        if (isOrbiting) {
+            animate(); // เรียก animate เมื่อเริ่มหมุนใหม่
+        }
+    };
 });
 
 // ✅ function เปิดเลเยอร์เดียว
