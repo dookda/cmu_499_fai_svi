@@ -158,19 +158,6 @@ map.on("load", () => {
     });
 });
 
-// add marker legend
-const legend = document.getElementById("legend");
-Object.entries(CATEGORY_COLORS).forEach(([label, color]) => {
-    const labelThai = labelMap[label] || label;
-    const item = document.createElement("div");
-    item.className = "legend-item";
-    item.innerHTML = `
-        <span class="legend-color" style="background:${color}"></span>
-        <span class="legend-label">${labelThai}</span>
-    `;
-    legend.appendChild(item);
-});
-
 // show google street view in iframe
 function showStreetView(lat, lng) {
     const gApiKey = "AIzaSyDz7XeV2UKhACZL1A7KHEk0uZc_HlP0j6w";
