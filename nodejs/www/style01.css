@@ -368,7 +368,7 @@
 
 /* ===== Custom Checkbox Styling ===== */
 .form-check {
-    margin: 8px 15px 8px 0;
+    margin: 1px 15px 1px 0;
     padding: 8px 12px;
     background: rgba(255, 255, 255, 0.9);
     border-radius: 8px;

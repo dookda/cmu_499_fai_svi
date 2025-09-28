@@ -35,7 +35,16 @@ class BasemapPopupControl {
             const item = document.createElement("div");
             item.textContent = name;
             item.onclick = () => {
+                // Store current checked layers before style change
+                const checkedLayers = getCheckedLayers();
+
                 map.setStyle(basemaps[name]);
+
+                // Reload layers after style is loaded
+                map.once('styledata', () => {
+                    reloadLayersAfterStyleChange(checkedLayers);
+                });
+
                 map.flyTo({ center: [98.9853, 18.7883], zoom: 12 });
                 menu.classList.remove("show");
             };
@@ -167,6 +176,56 @@ function showStreetView(lat, lng) {
         </iframe>
     `;
     document.getElementById("preview").innerHTML = iframe;
+}
+
+// Get currently checked layers
+function getCheckedLayers() {
+    const checkedLayers = [];
+    ["TRN", "TEC", "ENV", "EDC", "PSG", "HLT", "RES"].forEach(layer => {
+        const checkbox = document.getElementById(layer);
+        if (checkbox && checkbox.checked) {
+            checkedLayers.push(layer);
+        }
+    });
+    return checkedLayers;
+}
+
+// Reload layers after basemap style change
+function reloadLayersAfterStyleChange(layersToReload) {
+    // Wait a bit for the style to fully load
+    setTimeout(() => {
+        layersToReload.forEach(layer => {
+            const sourceId = `detections-${layer}`;
+            const layerId = `detections-layer-${layer}`;
+
+            // Add source if it doesn't exist
+            if (!map.getSource(sourceId)) {
+                map.addSource(sourceId, {
+                    type: "geojson",
+                    data: `/svi_api/detections/${layer}`
+                });
+            }
+
+            // Add layer if it doesn't exist
+            if (!map.getLayer(layerId)) {
+                map.addLayer({
+                    id: layerId,
+                    type: "circle",
+                    source: sourceId,
+                    paint: {
+                        "circle-radius": 6,
+                        "circle-color": CATEGORY_COLORS[layer] || "#888",
+                        "circle-stroke-color": "#ffffff",
+                        "circle-stroke-width": 1,
+                        "circle-opacity": 0.8
+                    }
+                });
+
+                // Re-add event handlers
+                addLayerEventHandlers(layerId);
+            }
+        });
+    }, 100); // Small delay to ensure style is fully loaded
 }
 
 // Initialize layers for checked checkboxes on page load
