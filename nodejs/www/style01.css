@@ -1,0 +1,367 @@
+.header {
+    display: flex;
+    justify-content: flex-start;
+    /* เรียงติดกันจากซ้าย */
+    align-items: flex-end;
+    /* ชิดล่างเสมอกัน */
+    background: #f7f0e8;
+    padding: 40px 80px;
+    gap: 400px;
+    /* ปรับตรงนี้ → ระยะห่าง h1 กับ p */
+}
+
+.header h1 {
+    margin-left: 80px;
+    /* margin: 0; */
+    font-family: 'Playfair Display', serif;
+    color: #4b2e20;
+    font-size: 3rem;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.header p {
+    font-family: "Noto Sans Thai", sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    max-width: 500px;
+    color: #4b2e20;
+    margin: 0;
+}
+
+.header p {
+    border-left: 1.5px solid #4b2e20;
+    padding-left: 20px;
+}
+
+
+
+/* ===== กล่องหลัก (map + arrow + svi) ===== */
+.content {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    /* ให้กล่อง map/svi ชิดด้านล่างเสมอกัน */
+    background: #4b2e20;
+    padding: 40px;
+    gap: 40px;
+    width: 100%;
+    height: 90vh;
+}
+
+/* ===== wrapper ห่อ box + note ===== */
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ===== กล่องย่อย map ===== */
+.box.map {
+    background: #f7f0e8;
+    color: #4b2e20;
+    width: 700px;
+    height: 500px;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* ===== กล่องย่อย svi ===== */
+.box.svi {
+    background: #f7f0e8;
+    color: #4b2e20;
+    width: 400px;
+    height: 500px;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* ===== พื้นที่แผนที่ / Street View ===== */
+#map,
+#preview {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    background: #fafafa;
+}
+
+.tooltip-popup {
+    background: #333 !important;
+    color: #fff !important;
+    font-size: 13px;
+    font-family: "Noto Sans Thai", sans-serif;
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+
+/* ===== ปุ่มสลับ Basemap ===== */
+.maplibregl-ctrl-basemap-popup {
+    position: relative;
+}
+
+.maplibregl-ctrl-basemap-popup button {
+    background: #ffffff;
+    border: none;
+    border-radius: 8px;
+    width: 38px;
+    height: 38px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #444;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+    transition: all 0.2s ease-in-out;
+}
+
+.maplibregl-ctrl-basemap-popup button:hover {
+    background: #f5f5f5;
+    transform: scale(1.05);
+}
+
+/* ===== Popup เมนู ===== */
+.basemap-menu {
+    display: none;
+    position: absolute;
+    top: 45px;
+    right: 0;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    z-index: 1000;
+    overflow: hidden;
+    animation: fadeIn 0.25s ease-in-out;
+    min-width: 160px;
+}
+
+.basemap-menu.show {
+    display: block;
+}
+
+.basemap-menu div {
+    padding: 10px 14px;
+    font-size: 14px;
+    font-family: "Noto Sans Thai", sans-serif;
+    color: #333;
+    cursor: pointer;
+    transition: background 0.2s, padding-left 0.2s;
+}
+
+.basemap-menu div:hover {
+    background: #f0f4f7;
+    padding-left: 18px;
+    color: #4b2e20;
+}
+
+/* ===== Animation ===== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== Street View Placeholder ===== */
+.preview-placeholder {
+    width: 100%;
+    height: 100%;
+    background: #f9f4ed;
+    border: 1px solid #e0d8c8;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Playfair Display", serif;
+    font-size: 3rem;
+    font-weight: 500;
+    color: #4b2e20;
+    text-align: center;
+    line-height: 1.4;
+}
+
+
+
+/* ===== ข้อความอธิบาย (อยู่นอกกล่อง) ===== */
+.note {
+    font-size: 1.2rem;
+    margin-top: 20px;
+    font-family: "Noto Sans Thai", sans-serif;
+    color: #f7f0e8;
+    /* ให้ตัดกับพื้นหลังเข้ม */
+    text-align: center;
+}
+
+/* ===== ลูกศร ===== */
+.arrow {
+    font-size: 3rem;
+    color: #f7f0e8;
+    align-self: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ===== popup สวย ๆ ===== */
+.leaflet-popup-content-wrapper.rounded-popup {
+    border-radius: 15px;
+    transition: all 0.3s ease-in-out;
+    padding: 8px 12px;
+}
+
+.leaflet-popup-tip {
+    transition: all 0.3s ease-in-out;
+}
+
+/* ===== ส่วนติดต่อ ===== */
+.contact {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #4b2e20;
+    /* น้ำตาลเข้ม */
+    color: #ffefd7;
+    padding: 60px;
+    min-height: 100vh;
+    gap: 40px;
+    /* เพิ่มระยะห่างระหว่างกล่อง */
+    flex-wrap: wrap;
+    /* ✅ ป้องกันล้นจอ */
+    box-sizing: border-box;
+}
+
+/* ฝั่งซ้าย */
+.contact-left h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    color: #ffefd7;
+    margin-left: 40px;
+}
+
+.city-logo img {
+    max-width: 500px;
+    /* ✅ ปรับให้ไม่ใหญ่เกิน */
+    opacity: 0.9;
+    margin-left: 40px;
+    height: auto;
+}
+
+/* กล่องขวา */
+.contact-box {
+    background: #f7f0e8;
+    color: #4b2e20;
+    padding: 40px;
+    border-radius: 10px;
+    flex: 1;
+    max-width: 800px;
+    /* ✅ จำกัดความกว้าง */
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+}
+
+
+.contact-box h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    margin-bottom: 30px;
+    color: #4b2e20;
+}
+
+/* รายการติดต่อ */
+.contact-info {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 1rem;
+    flex: 1;
+}
+
+.info-item i {
+    font-size: 2.5rem;
+    color: #6a642f;
+    margin-top: 4px;
+}
+
+.info-item strong {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
+.info-item p {
+    margin: 0;
+    line-height: 1.6;
+    font-family: "Noto Sans Thai", sans-serif;
+    font-size: 20px;
+    color: #4b2e20;
+}
+
+/* ช่อง More Info */
+.more-info {
+    display: flex;
+    gap: 10px;
+    margin-top: auto;
+    /* ดันลงไปล่างกล่อง */
+}
+
+.more-info input {
+    flex: 1;
+    padding: 12px 14px;
+    border: none;
+    border-radius: 6px;
+    background: #cfba97;
+    font-size: 1rem;
+    outline: none;
+    width: 350px;
+    height: 48px;
+    color: #fff;
+}
+
+.more-info button {
+    background: #4b2e20;
+    color: #ffefd7;
+    border: none;
+    padding: 12px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 1.1rem;
+}
+
+.more-info button i {
+    color: inherit;
+    /* รับสีเดียวกับปุ่ม */
+    font-size: 1.2rem;
+    /* ปรับขนาดตามต้องการ */
+}
+
+.more-info button:hover {
+    color: #e4e5c0;
+    background: #6a642f;
+}

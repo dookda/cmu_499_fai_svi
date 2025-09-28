@@ -1,0 +1,475 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* ===== ส่วนหัว ===== */
+.wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    padding: 40px 60px;
+    box-sizing: border-box;
+    background-color: #4b2e20;
+    /* ✅ เดิมครีม → เปลี่ยนเป็นน้ำตาล */
+}
+
+.city {
+    text-align: left;
+    margin-top: 10px;
+    margin-left: 80px;
+}
+
+.city img {
+    max-width: 200px;
+    opacity: 1;
+}
+
+.menu {
+    position: absolute;
+    top: 80px;
+    right: 60px;
+    text-align: right;
+    font-size: 1rem;
+    font-family: 'Playfair Display', serif;
+    line-height: 1.8;
+    border-left: 1px solid #f7f0e8;
+    padding-left: 10px;
+    color: #f7f0e8;
+}
+
+.menu a {
+    display: block;
+    /* ให้แต่ละลิงก์อยู่คนละบรรทัดเหมือน <p> */
+    color: #f7f0e8;
+    /* สีครีม */
+    text-decoration: none;
+    /* ตัดเส้นใต้ */
+    margin: 4px 0;
+    transition: color 0.3s;
+}
+
+.menu a:hover {
+    color: #ffcc80;
+    /* hover → ครีมสว่างขึ้น */
+}
+
+
+.title {
+    font-family: 'Playfair Display', serif;
+    color: #f7f0e8;
+    /* ✅ เดิมน้ำตาล → ครีม */
+    font-size: 6rem;
+    font-weight: 600;
+    line-height: 1.1;
+    margin-top: 80px;
+    margin-left: 60px;
+}
+
+.line-wrapper {
+    display: flex;
+    align-items: center;
+    margin: 20px 40px;
+}
+
+.divider {
+    width: 70%;
+    border-top: 2px solid #f7f0e8;
+    /* ✅ เส้นเปลี่ยนเป็นครีม */
+    margin-right: 20px;
+    margin-left: 30px;
+}
+
+.case-study {
+    font-size: 1.2rem;
+    font-family: 'Playfair Display', serif;
+    white-space: nowrap;
+    text-align: left;
+    color: #f7f0e8;
+    /* ✅ ครีม */
+}
+
+
+.bottom-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background-color: #6a642f;
+    /* เขียวตุ่น */
+}
+
+/* ===== ส่วน Hero ===== */
+.hero {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+}
+
+.left {
+    flex: 1;
+    background-color: #ffefd7;
+    /* ครีม */
+    padding: 80px 60px;
+    color: #4b2e20;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* กลางแนวตั้ง */
+    align-items: flex-start;
+    /* ชิดซ้าย */
+}
+
+.left h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem;
+    font-weight: 600;
+    line-height: 1.1;
+    margin-bottom: 40px;
+    margin-left: 40px;
+}
+
+.left p {
+    font-family: "Noto Sans Thai", sans-serif;
+    font-size: 1.5rem;
+    line-height: 1.8;
+    max-width: 70%;
+    /* จำกัดความกว้างให้อ่านง่าย */
+    margin-left: 40px;
+}
+
+.right {
+    flex: 1;
+    background-color: #4b2e20;
+    color: #ffefd7;
+    position: relative;
+    /* ✅ เพื่อให้ลูกใช้ absolute ได้ */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    /* กันเผื่อถ้าภาพใหญ่เกิน */
+}
+
+.right h2 {
+    font-family: 'Playfair Display', serif;
+    color: #fff;
+    font-size: 4rem;
+    font-weight: 400;
+    line-height: 1.2;
+    margin: 0;
+    position: absolute;
+    /* ✅ วางทับ */
+    top: 50%;
+    /* กึ่งกลางแนวตั้ง */
+    left: 50%;
+    /* กึ่งกลางแนวนอน */
+    transform: translate(-50%, -50%);
+    /* ✅ จัดให้อยู่ตรงกลางเป๊ะ */
+    text-align: center;
+    z-index: 2;
+    /* ✅ ให้อยู่บนสุด */
+}
+
+.building {
+    width: 100%;
+    text-align: center;
+    position: left;
+    z-index: 1;
+}
+
+.building img {
+    max-width: 160%;
+    height: auto;
+    opacity: 0.9;
+}
+
+
+/* ===== ส่วนแผนที่ ===== */
+.mapping {
+    min-height: 100vh;
+    /* อย่างน้อยเต็มความสูงหน้าจอ */
+    padding: 80px 60px;
+    background: #ffefd7;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* จัดกลางแนวตั้ง */
+    align-items: center;
+    /* จัดกลางแนวนอน */
+    box-sizing: border-box;
+}
+
+.mapping-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    /* กินเต็ม section */
+    max-width: 1200px;
+    /* จำกัดความกว้าง */
+    margin-bottom: 40px;
+}
+
+.mapping h2 {
+    color: #4b2e20;
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 600;
+    line-height: 1.1;
+    margin: 0;
+}
+
+.mapping-desc {
+    font-family: "Noto Sans Thai", sans-serif;
+    max-width: 600px;
+    color: #5a4632;
+    margin: 0;
+    line-height: 1.6;
+    font-size: 1.1rem;
+}
+
+/* กล่องแมพ */
+.map-grid {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 1400px;
+    /* จำกัดความกว้างของ grid */
+}
+
+.map-item {
+    text-align: center;
+    width: 350px;
+    transition: all 0.3s ease;
+}
+
+.map-box {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    /* จตุรัส */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid transparent;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.map-box.green {
+    background-color: #6a642f;
+}
+
+.map-box.brown {
+    background-color: #4b2e20;
+}
+
+/* --- รูปภาพ --- */
+.map-box img {
+    max-width: 60%;
+    height: auto;
+    transition: opacity 0.3s ease;
+}
+
+/* --- ข้อความ Hover --- */
+.hover-text {
+    position: absolute;
+    font-size: 2.5rem;
+    font-family: 'Playfair Display', serif;
+    color: #fff;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* เอฟเฟกต์ Hover */
+.map-box:hover {
+    border: 3px solid #b26dff;
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+}
+
+.map-box:hover img {
+    opacity: 0;
+    /* ซ่อนรูป */
+}
+
+.map-box:hover .hover-text {
+    opacity: 1;
+    /* โชว์ตัวอักษร */
+}
+
+/* คำอธิบายใต้กล่อง */
+.desc {
+    margin: 20px 0;
+    font-size: 1.1rem;
+    font-family: "Noto Sans Thai", sans-serif;
+    color: #4b2e20;
+}
+
+/* ปุ่ม */
+.map-item button {
+    width: 200px;
+    height: 50px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    font-family: 'Playfair Display', serif;
+    background: none;
+    border: 1px solid #4b2e20;
+    color: #4b2e20;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.map-item button:hover {
+    background: #4b2e20;
+    color: #fff;
+}
+
+/* ===== ส่วนติดต่อ ===== */
+/* ===== ส่วนติดต่อ ===== */
+.contact {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #4b2e20;
+    /* น้ำตาลเข้ม */
+    color: #ffefd7;
+    padding: 60px;
+    min-height: 100vh;
+    gap: 40px;
+    /* เพิ่มระยะห่างระหว่างกล่อง */
+    flex-wrap: wrap;
+    /* ✅ ป้องกันล้นจอ */
+    box-sizing: border-box;
+}
+
+/* ฝั่งซ้าย */
+.contact-left h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    color: #ffefd7;
+    margin-left: 40px;
+}
+
+.city-logo img {
+    max-width: 500px;
+    /* ✅ ปรับให้ไม่ใหญ่เกิน */
+    opacity: 0.9;
+    margin-left: 40px;
+    height: auto;
+}
+
+/* กล่องขวา */
+.contact-box {
+    background: #ffefd7;
+    color: #4b2e20;
+    padding: 40px;
+    border-radius: 10px;
+    flex: 1;
+    max-width: 800px;
+    /* ✅ จำกัดความกว้าง */
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+}
+
+
+.contact-box h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    margin-bottom: 30px;
+    color: #4b2e20;
+}
+
+/* รายการติดต่อ */
+.contact-info {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 1rem;
+    flex: 1;
+}
+
+.info-item i {
+    font-size: 2.5rem;
+    color: #6a642f;
+    margin-top: 4px;
+}
+
+.info-item strong {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
+.info-item p {
+    margin: 0;
+    line-height: 1.6;
+    font-family: "Noto Sans Thai", sans-serif;
+    font-size: 20px;
+    color: #4b2e20;
+}
+
+/* ช่อง More Info */
+.more-info {
+    display: flex;
+    gap: 10px;
+    margin-top: auto;
+    /* ดันลงไปล่างกล่อง */
+}
+
+.more-info input {
+    flex: 1;
+    padding: 12px 14px;
+    border: none;
+    border-radius: 6px;
+    background: #cfba97;
+    font-size: 1rem;
+    outline: none;
+    width: 350px;
+    height: 48px;
+    color: #fff;
+}
+
+.more-info button {
+    background: #4b2e20;
+    color: #ffefd7;
+    border: none;
+    padding: 12px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 1.1rem;
+}
+
+.more-info button i {
+    color: inherit;
+    /* รับสีเดียวกับปุ่ม */
+    font-size: 1.2rem;
+    /* ปรับขนาดตามต้องการ */
+}
+
+.more-info button:hover {
+    color: #e4e5c0;
+    background: #6a642f;
+}

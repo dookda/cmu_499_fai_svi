@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Type Of Urban Service</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- เชื่อม Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400..900&family=Cormorant:ital,wght@0,300..700;1,300..700&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Edu+SA+Hand:wght@400..700&family=Grandstander:ital,wght@0,100..900;1,100..900&family=Josefin+Slab:ital,wght@0,100..700;1,100..700&family=Libertinus+Math&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Permanent+Marker&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Quattrocento:wght@400;700&family=Roboto:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&family=Shadows+Into+Light&family=TikTok+Sans:opsz,wght@12..36,300..900&family=Tinos:ital,wght@0,400;0,700;1,400;1,700&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai&family=Playfair+Display:wght@500&display=swap"
+        rel="stylesheet">
+    <!-- เชื่อม Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style01.css">
+    <!-- เชื่อม maplibre -->
+    <link href="https://unpkg.com/maplibre-gl/dist/maplibre-gl.css" rel="stylesheet" />
+    <script src="https://unpkg.com/maplibre-gl/dist/maplibre-gl.js"></script>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+</head>
+
+<body>
+
+    <!-- หัวข้อ -->
+    <div class="header">
+        <h1>Type Of<br>Urban Service</h1>
+        <p>
+            แผนที่แสดงข้อมูลเชิงจุดของบริการเมืองที่ตรวจจับด้วย Deep Learning <br>
+            ผู้ใช้สามารถคลิกจุดบนแผนที่เพื่อดูรายละเอียด <br>
+            พร้อมภาพ Street View แบบโต้ตอบ
+        </p>
+    </div>
+
+    <!-- กล่อง Map และ SVI -->
+    <div class="content">
+
+        <!-- map -->
+        <div class="wrapper">
+            <div class="box map">
+                <div id="map"></div>
+            </div>
+            <p class="note">โปรดเลือกจุดที่ต้องการดู</p>
+        </div>
+
+        <!-- arrow -->
+        <div class="arrow">
+            <i class="fas fa-arrow-right"></i>
+        </div>
+
+        <!-- svi -->
+        <div class="wrapper svi">
+            <div class="box svi">
+                <div id="preview">
+                    <div class="preview-placeholder">
+                        <h2>Street<br>View<br>Imagery</h2>
+                    </div>
+                </div>
+            </div>
+            <p class="note">ภาพ Street View บริเวณนั้น</p>
+        </div>
+
+    </div>
+
+    <!-- Leaflet + script -->
+    <script src="https://unpkg.com/maplibre-gl/dist/maplibre-gl.js"></script>
+    <script src="script01.js"></script>
+
+    <section class="contact">
+        <div class="contact-left">
+            <h1>
+                URBAN <br>
+                SERVICE <br>
+                ACCESSIBILITY <br>
+                PROJECT
+            </h1>
+            <div class="city-logo">
+                <img src="./img/logo_white.png" alt="City Logo">
+            </div>
+        </div>
+
+        <div class="contact-box">
+            <h2>Contact<br>Information</h2>
+
+            <div class="contact-info">
+                <!-- Contact us -->
+                <div class="info-item">
+                    <i class="fa-solid fa-user"></i>
+                    <div>
+                        <strong>Contact us</strong>
+                        <p>chanisara612@gmail.com</p>
+                    </div>
+                </div>
+
+                <!-- Address -->
+                <div class="info-item">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <div>
+                        <strong>Address</strong>
+                        <p>chiang mai,<br>50200, Thailand</p>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+
+            <!-- More info -->
+            <div class="info-item">
+                <i class="fa-solid fa-circle-question"></i>
+                <div>
+                    <strong>More information</strong>
+                    <div class="more-info">
+                        <input type="text" placeholder="Type your question...">
+                        <button><i class="fa-solid fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>
