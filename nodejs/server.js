@@ -85,7 +85,7 @@ app.get("/svi_api/entry_points", async (req, res) => {
 //   }
 // });
 
-app.get('/svi/api/detections', (req, res) => {
+app.get('/svi_api/detections', (req, res) => {
   //create geojson data from class_and_pollution table and select id column only
   const sql = `SELECT jsonb_build_object(
                 'type', 'FeatureCollection',

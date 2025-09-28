@@ -110,7 +110,7 @@ map.on("load", () => {
     // load geojson point from API
     map.addSource("detections", {
         type: "geojson",
-        data: "/svi/api/detections"  // เปลี่ยนเป็น URL ที่ถูกต้อง
+        data: "/svi_api/detections"  // เปลี่ยนเป็น URL ที่ถูกต้อง
     });
 
     // add layer
