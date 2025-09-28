@@ -365,3 +365,100 @@
     color: #e4e5c0;
     background: #6a642f;
 }
+
+/* ===== Custom Checkbox Styling ===== */
+.form-check {
+    margin: 8px 15px 8px 0;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.form-check:hover {
+    background: rgba(255, 255, 255, 1);
+    border-color: #4b2e20;
+    box-shadow: 0 2px 8px rgba(75, 46, 32, 0.1);
+}
+
+.form-check-input {
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+    border: 2px solid #4b2e20;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.form-check-input:checked {
+    background-color: #4b2e20;
+    border-color: #4b2e20;
+    box-shadow: 0 0 0 0.2rem rgba(75, 46, 32, 0.25);
+}
+
+.form-check-input:focus {
+    border-color: #4b2e20;
+    box-shadow: 0 0 0 0.2rem rgba(75, 46, 32, 0.25);
+}
+
+.form-check-input:disabled {
+    background-color: #f0f0f0;
+    border-color: #ccc;
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.form-check-input:disabled+.form-check-label {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.form-check-label {
+    font-family: "Noto Sans Thai", sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #4b2e20;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.form-check:hover .form-check-label {
+    color: #2d1a10;
+}
+
+/* Container for checkboxes */
+.mb-2 {
+    padding: 15px;
+    background: rgba(247, 240, 232, 0.8);
+    border-radius: 12px;
+    margin-bottom: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Custom popup styling */
+.custom-popup {
+    font-family: "Noto Sans Thai", sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #333;
+    padding: 5px;
+}
+
+.custom-popup b {
+    color: #4b2e20;
+}
+
+/* Color indicators for checkboxes */
+.color-indicator {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 6px;
+    border: 1px solid rgba(75, 46, 32, 0.3);
+    vertical-align: middle;
+}

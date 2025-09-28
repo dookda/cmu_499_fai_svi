@@ -110,17 +110,34 @@ app.get('/svi_api/detections', (req, res) => {
   });
 });
 
-// Hexagon layers
-const hexTables = [
-  "hexagon_TRN",
-  "hexagon_TEC",
-  "hexagon_ENV",
-  "hexagon_RES",
-  "hexagon_HLT",
-  "hexagon_PSG",
-  "hexagon_EDC",
-  "hexagon_conf_label"
-];
+
+app.get('/svi_api/detections/:label', (req, res) => {
+  const { label } = req.params;
+  //create geojson data from class_and_pollution table and select id column only
+  const sql = `SELECT jsonb_build_object(
+                'type', 'FeatureCollection',
+                'features', jsonb_agg(features.feature)
+        ) AS geojson
+        FROM (
+                SELECT jsonb_build_object(
+                        'type', 'Feature',
+                        'id', id,
+                        'geometry', ST_AsGeoJSON(geom)::jsonb,
+                        'properties', to_jsonb(inputs) -- 'geom'
+                ) AS feature
+                FROM (SELECT id, lat_adj, lon_adj, label, conf, heading, geom 
+                FROM detections_matched_all 
+                WHERE label = $1) inputs
+        ) features;`;
+  pool.query(sql, [label], (err, result) => {
+    if (err) {
+      console.error(err);
+      res.status(500).json({ error: 'Database query error' });
+    } else {
+      res.json(result.rows[0].geojson);
+    }
+  });
+});
 
 // endpoint เช่น /hexagons/trn
 app.get("/svi_api/hexagons/:layer", async (req, res) => {

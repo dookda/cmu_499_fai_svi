@@ -107,55 +107,50 @@ function createCircleMarker(darkColor, lightColor) {
 
 // โหลดข้อมูล detections จาก API
 map.on("load", () => {
-    // load geojson point from API
-    map.addSource("detections", {
-        type: "geojson",
-        data: "/svi_api/detections"  // เปลี่ยนเป็น URL ที่ถูกต้อง
-    });
+    // map.addSource("detections", {
+    //     type: "geojson",
+    //     data: "/svi_api/detections"  
+    // });
 
-    // add layer
-    map.addLayer({
-        id: "detections-layer",
-        type: "circle",
-        source: "detections",
-        paint: {
-            "circle-radius": 6,
-            "circle-color": [
-                "match",
-                ["get", "label"],
-                ...Object.entries(CATEGORY_COLORS).flat(),
-                "#888"  // default color
-            ]
-        }
-    });
+    // // add layer
+    // map.addLayer({
+    //     id: "detections-layer",
+    //     type: "circle",
+    //     source: "detections",
+    //     paint: {
+    //         "circle-radius": 6,
+    //         "circle-color": [
+    //             "match",
+    //             ["get", "label"],
+    //             ...Object.entries(CATEGORY_COLORS).flat(),
+    //             "#888"  // default color
+    //         ]
+    //     }
+    // });
 
-    map.on("click", "detections-layer", (e) => {
-        const feature = e.features[0];
-        const label = feature.properties.label || "-";
-        const labelThai = labelMap[label] || label;
-        const conf = feature.properties.conf ? (feature.properties.conf * 100).toFixed(2) + "%" : "-";
-        const [lng, lat] = feature.geometry.coordinates;
-        showStreetView(lat, lng);
-        const popupContent = `
-            <div class="custom-popup">
-                <b>ประเภท:</b> ${labelThai} (${label})<br>
-                <b>ความเชื่อมั่น:</b> ${conf}<br>
-                <b>Lat:</b> ${lat.toFixed(6)}<br>
-                <b>Lng:</b> ${lng.toFixed(6)}
-            </div>
-        `;
-        new maplibregl.Popup()
-            .setLngLat([lng, lat])
-            .setHTML(popupContent)
-            .addTo(map);
-    });
+    //  map.on("click", "detections-layer", (e) => {
+    //     const feature = e.features[0];
+    //     const label = feature.properties.label || "-";
+    //     const labelThai = labelMap[label] || label;
+    //     const conf = feature.properties.conf ? (feature.properties.conf * 100).toFixed(2) + "%" : "-";
+    //     const [lng, lat] = feature.geometry.coordinates;
+    //     showStreetView(lat, lng);
+    //     const popupContent = `
+    //         <div class="custom-popup">
+    //             <b>ประเภท:</b> ${labelThai} (${label})<br>
+    //             <b>ความเชื่อมั่น:</b> ${conf}<br>
+    //             <b>Lat:</b> ${lat.toFixed(6)}<br>
+    //             <b>Lng:</b> ${lng.toFixed(6)}
+    //         </div>
+    //     `;
+    //     new maplibregl.Popup()
+    //         .setLngLat([lng, lat])
+    //         .setHTML(popupContent)
+    //         .addTo(map);
+    // });
 
-    map.on("mouseenter", "detections-layer", () => {
-        map.getCanvas().style.cursor = "pointer";
-    });
-    map.on("mouseleave", "detections-layer", () => {
-        map.getCanvas().style.cursor = "";
-    });
+    // Initialize layers based on checked checkboxes
+    initializeCheckedLayers();
 });
 
 // show google street view in iframe
@@ -174,69 +169,114 @@ function showStreetView(lat, lng) {
     document.getElementById("preview").innerHTML = iframe;
 }
 
-//             const bounds = new maplibregl.LngLatBounds();
+// Initialize layers for checked checkboxes on page load
+function initializeCheckedLayers() {
+    ["TRN", "TEC", "ENV", "EDC", "PSG", "HLT", "RES"].forEach(layer => {
+        const checkbox = document.getElementById(layer);
+        if (checkbox && checkbox.checked) {
+            loadLayerByCheckbox(layer);
+        }
+    });
+}
 
-//             data.features.forEach(f => {
-//                 const label = f.properties.label || "-";
-//                 const labelThai = labelMap[label] || label;
-//                 const conf = f.properties.conf ? (f.properties.conf * 100).toFixed(2) + "%" : "-";
-//                 const [lng, lat] = f.geometry.coordinates;
+function loadLayerByCheckbox(layer) {
+    const checkbox = document.getElementById(layer);
+    const isChecked = checkbox.checked;
+    const sourceId = `detections-${layer}`;
+    const layerId = `detections-layer-${layer}`;  // ใช้ ID ที่ไม่ซ้ำกัน
 
-//                 const darkColor = CATEGORY_COLORS[label] || "#888";
-//                 const lightColor = CATEGORY_LIGHT[label] || "#ccc";
+    if (isChecked) {
+        // เพิ่ม source และ layer
+        if (!map.getSource(sourceId)) {
+            // Show loading state
+            checkbox.disabled = true;
 
-//                 // ✅ Marker วงกลม (กลางอ่อน ขอบเข้ม)
-//                 const marker = new maplibregl.Marker({ element: createCircleMarker(darkColor, lightColor) })
-//                     .setLngLat([lng, lat])
-//                     .addTo(map);
+            map.addSource(sourceId, {
+                type: "geojson",
+                data: `/svi_api/detections/${layer}`
+            });
 
-//                 // ✅ Popup
-//                 const popupContent = `
-//                   <div class="custom-popup">
-//                     <b>ประเภท:</b> ${labelThai} (${label})<br>
-//                     <b>ความเชื่อมั่น:</b> ${conf}<br>
-//                     <b>Lat:</b> ${lat.toFixed(6)}<br>
-//                     <b>Lng:</b> ${lng.toFixed(6)}
-//                   </div>
-//                 `;
-//                 marker.setPopup(new maplibregl.Popup().setHTML(popupContent));
+            // Re-enable checkbox after source is loaded
+            map.on('sourcedata', function onSourceData(e) {
+                if (e.sourceId === sourceId && e.isSourceLoaded) {
+                    checkbox.disabled = false;
+                    map.off('sourcedata', onSourceData);
+                }
+            });
+        }
 
-//                 // ✅ Tooltip hover
-//                 const tooltip = new maplibregl.Popup({
-//                     closeButton: false,
-//                     closeOnClick: false,
-//                     offset: 20,
-//                     className: "tooltip-popup"
-//                 }).setText(labelThai);
+        if (!map.getLayer(layerId)) {
+            map.addLayer({
+                id: layerId,
+                type: "circle",
+                source: sourceId,
+                paint: {
+                    "circle-radius": 6,
+                    "circle-color": CATEGORY_COLORS[layer] || "#888",
+                    "circle-stroke-color": "#ffffff",
+                    "circle-stroke-width": 1,
+                    "circle-opacity": 0.8
+                }
+            });
 
-//                 marker.getElement().addEventListener("mouseenter", () => {
-//                     tooltip.setLngLat([lng, lat]).addTo(map);
-//                 });
-//                 marker.getElement().addEventListener("mouseleave", () => {
-//                     tooltip.remove();
-//                 });
+            // เพิ่ม event handlers สำหรับแต่ละ layer
+            addLayerEventHandlers(layerId);
+        }
+    } else {
+        // ลบ layer และ source
+        if (map.getLayer(layerId)) {
+            map.removeLayer(layerId);
+        }
+        if (map.getSource(sourceId)) {
+            map.removeSource(sourceId);
+        }
+    }
+}
 
-//                 // ✅ Street View
-//                 marker.getElement().addEventListener("click", () => {
-//                     const gApiKey = "AIzaSyDz7XeV2UKhACZL1A7KHEk0uZc_HlP0j6w";
-//                     const iframe = `
-//                         <iframe
-//                           width="100%"
-//                           height="100%"
-//                           style="border:0; border-radius:8px;"
-//                           loading="lazy"
-//                           allowfullscreen
-//                           src="https://www.google.com/maps/embed/v1/streetview?location=${lat},${lng}&key=${gApiKey}">
-//                         </iframe>
-//                     `;
-//                     document.getElementById("preview").innerHTML = iframe;
-//                 });
+// เพิ่ม event handlers สำหรับ layer
+function addLayerEventHandlers(layerId) {
+    // Click event to show popup and street view
+    map.on("click", layerId, (e) => {
+        const feature = e.features[0];
+        const label = feature.properties.label || "-";
+        const labelThai = labelMap[label] || label;
+        const conf = feature.properties.conf ? (feature.properties.conf * 100).toFixed(2) + "%" : "-";
+        const [lng, lat] = feature.geometry.coordinates;
 
-//                 bounds.extend([lng, lat]);
-//             });
+        // Show street view
+        showStreetView(lat, lng);
 
-//             // ✅ Zoom to bounds
-//             map.fitBounds(bounds, { padding: 20 });
-//         }
-//     })
-//     .catch(err => console.error("Error loading detections:", err));
+        // Show popup
+        const popupContent = `
+            <div class="custom-popup">
+                <b>ประเภท:</b> ${labelThai} (${label})<br>
+                <b>ความเชื่อมั่น:</b> ${conf}<br>
+                <b>Lat:</b> ${lat.toFixed(6)}<br>
+                <b>Lng:</b> ${lng.toFixed(6)}
+            </div>
+        `;
+        new maplibregl.Popup()
+            .setLngLat([lng, lat])
+            .setHTML(popupContent)
+            .addTo(map);
+    });
+
+    // Mouse events
+    map.on("mouseenter", layerId, () => {
+        map.getCanvas().style.cursor = "pointer";
+    });
+
+    map.on("mouseleave", layerId, () => {
+        map.getCanvas().style.cursor = "";
+    });
+}
+
+// เพิ่ม event listener ให้ checkbox (รวม RES)
+["TRN", "TEC", "ENV", "EDC", "PSG", "HLT", "RES"].forEach(layer => {
+    const checkbox = document.getElementById(layer);
+    if (checkbox) {
+        checkbox.addEventListener("change", () => loadLayerByCheckbox(layer));
+    }
+});
+
+
